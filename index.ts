@@ -20,6 +20,7 @@ import morgan from 'morgan';
 import GetENV from './util/env';
 import { NextRequestId } from './util/generator.helper';
 import { LEVEL, LOG } from './util/logger';
+import mongoConnect from './util/mongoConnect';
 
 const app = express();
 
@@ -29,6 +30,9 @@ LOG(`Environment: ${GetENV('NODE_ENV').toUpperCase()}`, { reqId: 'Starting-App',
 // ⭐🔴 Express middleware
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// MongoDB connection
+mongoConnect();
 
 // requestId is a unique identifier for each request
 app.use((req, res, next) => {
