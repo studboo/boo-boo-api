@@ -41,10 +41,11 @@ function getDateTime(): string {
 /**
  * Logger function
  * @param {string} message - message to log
- * @param {string} logOptions - level of message
+ * @param {LogOptions} logOptions - level of message
  * @returns {void}
  * @example
  * LOG('Hello World', { level: LEVEL.INFO });
+ * LOG('Hello World', { level: LEVEL.DEBUG, reqId: '1234' });
  */
 function LOG(message: string, logOptions?: LogOptions): void {
 	const { reqId = '----------', level } = logOptions || {};
