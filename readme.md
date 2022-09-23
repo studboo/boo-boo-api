@@ -1,3 +1,8 @@
+This will be updated soon, Initial Implementation is done for the project.
+
+* About this Application:
+- This is a MongoDB auto CURD API generator
+
 initial commit
 - adding packages to the project
 - initializing the project
