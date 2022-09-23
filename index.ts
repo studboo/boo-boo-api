@@ -15,8 +15,9 @@
  */
 // Import the required packages
 import chalk from 'chalk';
-import express, { Response } from 'express';
+import express, { ErrorRequestHandler, Response } from 'express';
 import morgan from 'morgan';
+import routes from './routes/router';
 import GetENV from './util/env';
 import { NextRequestId } from './util/generator.helper';
 import { LEVEL, LOG } from './util/logger';
@@ -59,6 +60,9 @@ if (GetENV('NODE_ENV') === 'development') {
 	);
 }
 
+// router Import
+app.use('/api/v1', routes);
+
 // Sending to pages not found
 app.all('*', (req, res) => {
 	res.status(404).json({
@@ -66,6 +70,18 @@ app.all('*', (req, res) => {
 		message: `Can't find ${req.originalUrl} on this server!`,
 	});
 });
+
+// ⭐🔴 Global error handling middleware using ErrorRequestHandler
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+	LOG(err, { reqId: res.locals.reqId, level: LEVEL.ERROR });
+	res.status(err.statusCode || 500).json({
+		status: 'error',
+		message: err.message,
+	});
+};
+
+app.use(globalErrorHandler);
 
 app.listen(GetENV('EXPRESS_PORT'), () => {
 	LOG(`Server started on port ${chalk.cyanBright(GetENV('EXPRESS_PORT'))}`, {

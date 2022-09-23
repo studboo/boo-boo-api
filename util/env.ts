@@ -37,7 +37,6 @@ function loadENV(): DotenvParseOutput {
 		LOG('Missing environment variables', { reqId: 'Starting-App-Error', level: LEVEL.ERROR });
 		process.exit(1);
 	}
-	LOG('Environment variables loaded', { level: LEVEL.INFO, reqId: 'Starting-App' });
 	return env;
 }
 
