@@ -1,10 +1,8 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 // console log logger function
 
 import util from 'util';
 import chalk from 'chalk';
-import GetENV from './env';
 
 // different levels of logging
 // trace, debug, info, warn, error and fatal.
@@ -85,7 +83,7 @@ function LOG(message: string, logOptions?: LogOptions): void {
 			break;
 
 		default:
-			if (GetENV('NODE_ENV') !== 'production') {
+			if (process.env.NODE_ENV !== 'production') {
 				console.log(`${chalk.bold.green('[DEV]')} ${log}`);
 			}
 			break;

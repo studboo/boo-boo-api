@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import path from 'path';
 import dotenv, { DotenvParseOutput } from 'dotenv';
+import exitAppIfMissingEnv from './exit';
 import { LEVEL, LOG } from './logger';
 
 /**
@@ -22,21 +23,34 @@ function loadENV(): DotenvParseOutput {
 	// - JWT_REFRESH_TOKEN_EXPIRES_IN
 
 	// if any of the above variables are missing, throw an error
-	if (
-		!env ||
-		!env.NODE_ENV ||
-		!env.EXPRESS_PORT ||
-		!env.DB_URL ||
-		!env.DB_USER ||
-		!env.DB_PASSWORD ||
-		!env.JWT_SECRET ||
-		!env.JWT_EXPIRES_IN ||
-		!env.JWT_REFRESH_TOKEN_SECRET ||
-		!env.JWT_REFRESH_TOKEN_EXPIRES_IN
-	) {
+	// change above code to switch case
+	if (!env) {
 		LOG('Missing environment variables', { reqId: 'Starting-App-Error', level: LEVEL.ERROR });
 		process.exit(1);
 	}
+
+	exitAppIfMissingEnv('NODE_ENV');
+	exitAppIfMissingEnv('EXPRESS_PORT');
+	exitAppIfMissingEnv('DB_URL');
+	exitAppIfMissingEnv('DB_USER');
+	exitAppIfMissingEnv('DB_PASSWORD');
+	exitAppIfMissingEnv('JWT_SECRET');
+	exitAppIfMissingEnv('JWT_EXPIRES_IN');
+	exitAppIfMissingEnv('JWT_REFRESH_TOKEN_SECRET');
+	exitAppIfMissingEnv('JWT_REFRESH_TOKEN_EXPIRES_IN');
+
+	switch (env.NODE_ENV) {
+		case 'development':
+			LOG('Environment: Development', { reqId: 'Starting-App', level: LEVEL.INFO });
+			break;
+		case 'production':
+			LOG('Environment: Production', { reqId: 'Starting-App', level: LEVEL.INFO });
+			break;
+		default:
+			LOG('Environment: Unknown', { reqId: 'Starting-App', level: LEVEL.INFO });
+			break;
+	}
+
 	return env;
 }
 
