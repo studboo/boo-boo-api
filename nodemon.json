@@ -1,4 +1,5 @@
 {
+	"watchExtensions": ["ts", "env"],
 	"execMap": {
 		"ts": "ts-node"
 	}
