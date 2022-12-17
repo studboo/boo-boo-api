@@ -15,13 +15,15 @@
  */
 // Import the required packages
 import chalk from 'chalk';
-import express, { ErrorRequestHandler, Response } from 'express';
+import express, { Response } from 'express';
 import morgan from 'morgan';
+import { globalErrorHandler } from './error/globalErrorHandler';
 import routes from './routes/router';
 import GetENV from './util/env';
 import { NextRequestId } from './util/generator.helper';
 import { LEVEL, LOG } from './util/logger';
 import mongoConnect from './util/mongoConnect';
+import printRoutes from './util/printAllRoutes';
 
 const app = express();
 
@@ -71,16 +73,6 @@ app.all('*', (req, res) => {
 	});
 });
 
-// ⭐🔴 Global error handling middleware using ErrorRequestHandler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
-	LOG(err, { reqId: res.locals.reqId, level: LEVEL.ERROR });
-	res.status(err.statusCode || 500).json({
-		status: 'error',
-		message: err.message,
-	});
-};
-
 app.use(globalErrorHandler);
 
 app.listen(GetENV('EXPRESS_PORT'), () => {
@@ -88,4 +80,5 @@ app.listen(GetENV('EXPRESS_PORT'), () => {
 		reqId: 'Starting-App',
 		level: LEVEL.INFO,
 	});
+	printRoutes(app);
 });

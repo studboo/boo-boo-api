@@ -4,6 +4,20 @@ import dotenv, { DotenvParseOutput } from 'dotenv';
 import exitAppIfMissingEnv from './exit';
 import { LEVEL, LOG } from './logger';
 
+// ENUM for environment variables
+export enum envEnums {
+	NODE_ENV = 'NODE_ENV',
+	EXPRESS_PORT = 'EXPRESS_PORT',
+	DB_URL = 'DB_URL',
+	DB_USER = 'DB_USER',
+	DB_PASSWORD = 'DB_PASSWORD',
+	JWT_SECRET = 'JWT_SECRET',
+	JWT_EXPIRES = 'JWT_EXPIRES_IN',
+	JWT_REFRESH = 'JWT_REFRESH',
+	DEVELOPMENT = 'development',
+	PRODUCTION = 'production',
+}
+
 /**
  * Get the ENV variables from .env file
  * @returns {DotenvParseOutput}
@@ -62,7 +76,7 @@ const ENV = loadENV();
  * @example
  * GetENV('NODE_ENV'); // returns 'development' or 'production'
  */
-function GetENV(key: string): string {
+function GetENV(key: envEnums | string): string {
 	if (!ENV[key]) {
 		LOG(`Missing environment variable: ${key}`, { reqId: 'Error-Missing-Env', level: LEVEL.ERROR });
 		process.exit(1);

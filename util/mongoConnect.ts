@@ -14,8 +14,11 @@ const mongoConnect = async () => {
 		await mongoose.connect(CONNECTION);
 		LOG('Connected to MongoDB', { level: LEVEL.INFO, reqId: 'Starting-App' });
 	} catch (error) {
-		LOG(`Error connecting to MongoDB: ${error}`, { reqId: 'Starting-App-Error', level: LEVEL.ERROR });
-		process.exit(1);
+		LOG(`Error connecting to MongoDB: ${error}, File: util\\mongoConnect.ts`, {
+			reqId: 'Starting-App-Error',
+			level: LEVEL.ERROR,
+		});
+		process.exit(0);
 	}
 };
 
