@@ -5,6 +5,7 @@ import path from 'path';
 import { Request, Response, Router } from 'express';
 
 import * as DB from '../controller/default';
+import AUTH from '../util/auth';
 import { LEVEL, LOG } from '../util/logger';
 
 const routes = Router();
@@ -57,6 +58,30 @@ fs.readdirSync(folder).forEach((file, index) => {
 	// eslint-disable-next-line import/no-dynamic-require
 	CURDMODEL[index] = require(`${absolutePath}`);
 
+	/**
+	 * Example of the above snippet comment
+	 */
+
+	if (filename === 'test') {
+		LOG(`Generating CURD routes for ${filename} with Auth`, { level: LEVEL.WARN, reqId: 'Starting-App' });
+		routes.get(`/${filename}withAuth`, AUTH, (req, res, next) => {
+			DB.getAll(CURDMODEL[index], req, res, next);
+		});
+		routes.get(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
+			DB.getOne(CURDMODEL[index], req, res, next);
+		});
+		routes.post(`/${filename}withAuth`, AUTH, (req, res, next) => {
+			DB.createOne(CURDMODEL[index], req, res, next);
+		});
+		routes.put(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
+			DB.updateOne(CURDMODEL[index], req, res, next);
+		});
+		routes.delete(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
+			DB.deleteOne(CURDMODEL[index], req, res, next);
+		});
+	}
+
+	// Dynamically generate CURD routes
 	LOG(`Generating CURD routes for ${filename}`, { level: LEVEL.INFO, reqId: 'Starting-App' });
 	routes.get(`/${filename}`, (req, res, next) => {
 		DB.getAll(CURDMODEL[index], req, res, next);

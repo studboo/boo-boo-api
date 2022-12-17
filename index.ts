@@ -23,6 +23,7 @@ import GetENV from './util/env';
 import { NextRequestId } from './util/generator.helper';
 import { LEVEL, LOG } from './util/logger';
 import mongoConnect from './util/mongoConnect';
+import printRoutes from './util/printAllRoutes';
 
 const app = express();
 
@@ -79,4 +80,5 @@ app.listen(GetENV('EXPRESS_PORT'), () => {
 		reqId: 'Starting-App',
 		level: LEVEL.INFO,
 	});
+	printRoutes(app);
 });
