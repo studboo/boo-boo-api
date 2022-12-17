@@ -2,15 +2,17 @@
 /* eslint-disable global-require */
 import fs from 'fs';
 import path from 'path';
-import * as express from 'express';
+import { Request, Response, Router } from 'express';
+
 import * as DB from '../controller/default';
 import { LEVEL, LOG } from '../util/logger';
 
-const routes = express.Router();
+const routes = Router();
 
-routes.get('/', (req, res) => {
+routes.get('/', (_req: Request, res: Response) => {
 	res.json({
-		note: 'The Following /*/*/*/* URL paths are dymatically generated',
+		note: 'Welcome to the API V1 Routes',
+		info: 'The Following /*/*/*/* URL paths are dymatically generated',
 	});
 });
 
@@ -26,7 +28,31 @@ fs.readdirSync(folder).forEach((file, index) => {
 	const filename = path.basename(file, extname);
 	const absolutePath = path.resolve(folder, file);
 
-	console.log(`Loading model: ${absolutePath}`);
+	/**
+	 * You can use if or switch for dynamic routes
+	 *
+	 * e.g.
+	 * if (filename === 'test') {
+	 * 	routes.get(`/${filename}/more_fun`, (req, res, next) => {
+	 * 		res.json({
+	 * 			note: 'This is a more fun route',
+	 * 		});
+	 * 	});
+	 * }
+	 *
+	 * another example
+	 * switch (filename) {
+	 * 	case 'test':
+	 * 		routes.use(auth);
+	 * 		break;
+	 * 	default:
+	 * 		break;
+	 * }
+	 * here auth is a middleware for authentication
+	 *
+	 */
+
+	LOG(`Loading model: ${absolutePath}`);
 	// Dynamically load the model files
 	// eslint-disable-next-line import/no-dynamic-require
 	CURDMODEL[index] = require(`${absolutePath}`);
@@ -49,6 +75,7 @@ fs.readdirSync(folder).forEach((file, index) => {
 	});
 });
 
+// Devlopment routes (comment out when in production)
 // CRUD using test model
 // // create one
 // routes.post('/test', DB.createOne(test));
