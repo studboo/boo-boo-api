@@ -39,17 +39,8 @@
 -   Run `pnpm build` to build the application and run it using `node`
 -   Run `pnpm test` to run the tests
 
-<!-- Initial Push Comments -->
+**Use Postman for Testing**
 
-**Change log:**
+-   Import `Auto CRUD sample.postman_collection.json` file to your postman from `postman` folder
 
-initial commit
-
--   adding packages to the project
--   initializing the project
--   setting up the project
-
-Notes:
-
--   I will use as many comments as I can to explain the code
--   Please give stars to the project if you like it
+Enjoy! :smile:
