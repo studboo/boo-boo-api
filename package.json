@@ -1,7 +1,7 @@
 {
 	"name": "boo-boo-api",
 	"version": "1.0.0",
-	"description": "Automatically generates the CURD api for a given model",
+	"description": "Automatically generates the CRUD api for a given model",
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc -p tsconfig.json && node ./build/index.js",

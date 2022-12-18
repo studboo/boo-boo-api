@@ -21,9 +21,9 @@ routes.get('/', (_req: Request, res: Response) => {
 const folder = './DB';
 
 // 2. model array to define models
-const CURDMODEL: any[] = [];
+const CRUDMODEL: any[] = [];
 
-// 3. read all model files and generate all CURD routes
+// 3. read all model files and generate all CRUD routes
 fs.readdirSync(folder).forEach((file, index) => {
 	const extname = path.extname(file);
 	const filename = path.basename(file, extname);
@@ -56,47 +56,47 @@ fs.readdirSync(folder).forEach((file, index) => {
 	LOG(`Loading model: ${absolutePath}`);
 	// Dynamically load the model files
 	// eslint-disable-next-line import/no-dynamic-require
-	CURDMODEL[index] = require(`${absolutePath}`);
+	CRUDMODEL[index] = require(`${absolutePath}`);
 
 	/**
 	 * Example of the above snippet comment
 	 */
 
 	if (filename === 'test') {
-		LOG(`Generating CURD routes for ${filename} with Auth`, { level: LEVEL.WARN, reqId: 'Starting-App' });
+		LOG(`Generating CRUD routes for ${filename} with Auth`, { level: LEVEL.WARN, reqId: 'Starting-App' });
 		routes.get(`/${filename}withAuth`, AUTH, (req, res, next) => {
-			DB.getAll(CURDMODEL[index], req, res, next);
+			DB.getAll(CRUDMODEL[index], req, res, next);
 		});
 		routes.get(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
-			DB.getOne(CURDMODEL[index], req, res, next);
+			DB.getOne(CRUDMODEL[index], req, res, next);
 		});
 		routes.post(`/${filename}withAuth`, AUTH, (req, res, next) => {
-			DB.createOne(CURDMODEL[index], req, res, next);
+			DB.createOne(CRUDMODEL[index], req, res, next);
 		});
 		routes.put(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
-			DB.updateOne(CURDMODEL[index], req, res, next);
+			DB.updateOne(CRUDMODEL[index], req, res, next);
 		});
 		routes.delete(`/${filename}withAuth/:id`, AUTH, (req, res, next) => {
-			DB.deleteOne(CURDMODEL[index], req, res, next);
+			DB.deleteOne(CRUDMODEL[index], req, res, next);
 		});
 	}
 
-	// Dynamically generate CURD routes
-	LOG(`Generating CURD routes for ${filename}`, { level: LEVEL.INFO, reqId: 'Starting-App' });
+	// Dynamically generate CRUD routes
+	LOG(`Generating CRUD routes for ${filename}`, { level: LEVEL.INFO, reqId: 'Starting-App' });
 	routes.get(`/${filename}`, (req, res, next) => {
-		DB.getAll(CURDMODEL[index], req, res, next);
+		DB.getAll(CRUDMODEL[index], req, res, next);
 	});
 	routes.get(`/${filename}/:id`, (req, res, next) => {
-		DB.getOne(CURDMODEL[index], req, res, next);
+		DB.getOne(CRUDMODEL[index], req, res, next);
 	});
 	routes.post(`/${filename}`, (req, res, next) => {
-		DB.createOne(CURDMODEL[index], req, res, next);
+		DB.createOne(CRUDMODEL[index], req, res, next);
 	});
 	routes.put(`/${filename}/:id`, (req, res, next) => {
-		DB.updateOne(CURDMODEL[index], req, res, next);
+		DB.updateOne(CRUDMODEL[index], req, res, next);
 	});
 	routes.delete(`/${filename}/:id`, (req, res, next) => {
-		DB.deleteOne(CURDMODEL[index], req, res, next);
+		DB.deleteOne(CRUDMODEL[index], req, res, next);
 	});
 });
 

@@ -1,6 +1,6 @@
 **About this Application:**
 
--   This is a MongoDB auto CURD API generator
+-   This is a MongoDB auto CRUD API generator
 -   All you need to do is to provide some information about your database and the application will generate the API for you
 -   Each API will have the following methods:
     -   File `router.js` will have the following methods:
