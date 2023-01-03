@@ -12,7 +12,7 @@ const CONNECTION = MONGO_DB_URL.replace('<username>', MONGO_DB_USER).replace('<p
 const mongoConnect = async () => {
 	try {
 		await mongoose.connect(CONNECTION);
-		LOG('Connected to MongoDB', { level: LEVEL.INFO, reqId: 'Starting-App' });
+		LOG('Connected to MongoDB ✅', { level: LEVEL.INFO, reqId: 'Starting-App' });
 	} catch (error) {
 		LOG(`Error connecting to MongoDB: ${error}, File: util\\mongoConnect.ts`, {
 			reqId: 'Starting-App-Error',

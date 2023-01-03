@@ -55,13 +55,13 @@ function loadENV(): DotenvParseOutput {
 
 	switch (env.NODE_ENV) {
 		case 'development':
-			LOG('Environment: Development', { reqId: 'Starting-App', level: LEVEL.INFO });
+			LOG('Environment: Development ⚙️', { reqId: 'Starting-App', level: LEVEL.INFO });
 			break;
 		case 'production':
-			LOG('Environment: Production', { reqId: 'Starting-App', level: LEVEL.INFO });
+			LOG('Environment: Production ✅', { reqId: 'Starting-App', level: LEVEL.INFO });
 			break;
 		default:
-			LOG('Environment: Unknown', { reqId: 'Starting-App', level: LEVEL.INFO });
+			LOG('Environment: Unknown ⁉️', { reqId: 'Starting-App', level: LEVEL.INFO });
 			break;
 	}
 
