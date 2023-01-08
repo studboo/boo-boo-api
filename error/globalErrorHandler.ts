@@ -2,7 +2,7 @@
 // ⭐🔴 Global error handling middleware using ErrorRequestHandler
 
 import { ErrorRequestHandler, Request, Response } from 'express';
-import GetENV, { envEnums } from '../util/env';
+import { GetENV, envEnums } from '../util/env';
 import { LOG, LEVEL } from '../util/logger';
 
 // AppError class

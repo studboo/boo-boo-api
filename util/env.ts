@@ -85,4 +85,17 @@ function GetENV(key: envEnums | string): string {
 	return ENV[key];
 }
 
-export default GetENV;
+function UpdateEnv(): void {
+	const env = dotenv.config({ path: path.resolve(__dirname, '../.env') }).parsed;
+
+	if (!env) {
+		LOG('Missing environment variables', { reqId: 'Missing-Env', level: LEVEL.ERROR });
+		process.exit(1);
+	}
+
+	Object.keys(env).forEach((key) => {
+		ENV[key] = env[key];
+	});
+}
+
+export { GetENV, UpdateEnv };

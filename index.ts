@@ -18,12 +18,12 @@ import chalk from 'chalk';
 import express, { Response } from 'express';
 import morgan from 'morgan';
 import { globalErrorHandler } from './error/globalErrorHandler';
-
-import GetENV from './util/env';
+import { GetENV } from './util/env';
 import { NextRequestId } from './util/generator.helper';
 import { LEVEL, LOG } from './util/logger';
-import mongoConnect from './util/mongoConnect';
+import { mongoConnect } from './util/mongoConnect';
 import printRoutes from './util/printAllRoutes';
+import { redisClient } from './util/redisClient';
 
 // MongoDB connection
 // wait till the connection is established to mongoDB
@@ -34,6 +34,9 @@ import printRoutes from './util/printAllRoutes';
 	if you are using a different environment, then you need to add a case for that environment 
 	in the switch statement ("util\mongoConnect.ts) */
 	await mongoConnect(GetENV('MONGO_DB_CONFIG'));
+
+	// redis connection
+	await redisClient();
 
 	const routes = await import('./routes/router');
 

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import mongoose from 'mongoose';
-import GetENV from './env';
+import { GetENV } from './env';
 import { LEVEL, LOG } from './logger';
 
 const mongoConnect = async (MONGO_DB_CONFIG: string) => {
@@ -49,4 +49,8 @@ const mongoConnect = async (MONGO_DB_CONFIG: string) => {
 	}
 };
 
-export default mongoConnect;
+const disconnectMongo = async () => {
+	await mongoose.disconnect();
+};
+
+export { mongoConnect, disconnectMongo };
