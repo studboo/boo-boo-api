@@ -72,7 +72,8 @@ const ENV = loadENV();
 
 /**
  * Get the current environment
- * @returns {string} - current environment
+ * @param {string} key - environment variable
+ * @returns {string} value - current environment
  * @example
  * GetENV('NODE_ENV'); // returns 'development' or 'production'
  */

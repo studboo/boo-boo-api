@@ -29,7 +29,11 @@ import printRoutes from './util/printAllRoutes';
 // wait till the connection is established to mongoDB
 // before starting the server
 (async () => {
-	await mongoConnect();
+	/* MONGO_DB_CONFIG is a string that is set in the .env file
+	it can be either 'LOCAL' or 'TEST' or 'PROD' or 'DEV', etc depending on the environment
+	if you are using a different environment, then you need to add a case for that environment 
+	in the switch statement ("util\mongoConnect.ts) */
+	await mongoConnect(GetENV('MONGO_DB_CONFIG'));
 
 	const routes = await import('./routes/router');
 

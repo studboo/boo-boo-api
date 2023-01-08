@@ -26,7 +26,7 @@ function getParentRoute(inputString: string): string {
 
 // print out all paths and their methods
 function printRoutes(app: Express) {
-	const serverAddress = `http://localhost:${process.env.PORT || 3000}`;
+	const serverAddress = `${process.env.EXPRESS_URL || '0.0.0.0'}:${process.env.EXPRESS_PORT || 3000}`;
 
 	const productionRoutes = [];
 	for (let i = 0; i < app._router.stack.length; i++) {
